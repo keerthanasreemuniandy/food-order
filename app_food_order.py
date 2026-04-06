@@ -1,49 +1,30 @@
 import streamlit as st
 
-# Title
-st.title("🍔 Food Ordering System")
+# Title of the application
+st.title("Movie Ticket Booking System")
 
-# Input Fields
-name = st.text_input("Enter Customer Name")
+try:
+    # GUI Components for user input
+    customer_name = st.text_input("Enter Customer Name")
+    movie_title = st.selectbox("Select Movie Title", ["Avengers", "Kung Fu Panda", "Frozen"])
+    show_time = st.selectbox("Select Show Time", ["10:00 AM", "2:00 PM", "8:00 PM"])
+    seat_type = st.radio("Select Seat Type", ["Standard", "Premium"])
 
-food = st.selectbox(
-    "Select Food",
-    ["Nasi Lemak (RM5)", "Chicken Chop (RM12)", "Burger (RM8)"]
-)
+    # Action when the button is clicked
+    if st.button("Book Ticket"):
+        
+        # Exception Handling / Validation
+        if not customer_name.strip():
+            st.error("Error: Customer name cannot be empty. Please enter your name.")
+        else:
+            # Display success message and booking summary
+            st.success("Ticket booked successfully!")
+            st.write("--- Booking Summary ---")
+            st.write(f"Customer Name: {customer_name}")
+            st.write(f"Movie Title: {movie_title}")
+            st.write(f"Show Time: {show_time}")
+            st.write(f"Seat Type: {seat_type}")
 
-quantity = st.number_input("Enter Quantity", min_value=0, step=1)
-
-# Button
-if st.button("Order"):
-    try:
-        # Validation
-        if name.strip() == "":
-            raise ValueError("Customer name cannot be empty!")
-
-        if quantity <= 0:
-            raise ValueError("Quantity must be more than 0!")
-
-        # Price Logic
-        if "Nasi Lemak" in food:
-            price = 5
-        elif "Chicken Chop" in food:
-            price = 12
-        elif "Burger" in food:
-            price = 8
-
-        total = price * quantity
-
-        # Output
-        st.success("✅ Order Successful!")
-
-        st.subheader("🧾 Order Details")
-        st.write(f"**Customer Name:** {name}")
-        st.write(f"**Food Item:** {food}")
-        st.write(f"**Quantity:** {quantity}")
-        st.write(f"**Total Price:** RM {total:.2f}")
-
-    except ValueError as e:
-        st.error(f"❌ Error: {e}")
-
-    except Exception as e:
-        st.error(f"⚠ Unexpected Error: {e}")
+except Exception as e:
+    # Catching any unexpected errors
+    st.error(f"An unexpected error occurred: {e}")
