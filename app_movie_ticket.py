@@ -1,39 +1,30 @@
 import streamlit as st
 
-st.title("Food Ordering System")
-
-# Food prices
-prices = {
-    "Nasi Lemak": 5.00,
-    "Chicken Chop": 12.00,
-    "Burger": 8.00
-}
+# Title of the application
+st.title("Movie Ticket Booking System")
 
 try:
+    # GUI Components for user input
     customer_name = st.text_input("Enter Customer Name")
-    food_selection = st.selectbox("Select Food", list(prices.keys()))
-    quantity = st.number_input("Enter Quantity", min_value=0, value=0, step=1)
+    movie_title = st.selectbox("Select Movie Title", ["Avengers", "Kung Fu Panda", "Frozen"])
+    show_time = st.selectbox("Select Show Time", ["10:00 AM", "2:00 PM", "8:00 PM"])
+    seat_type = st.radio("Select Seat Type", ["Standard", "Premium"])
 
-    if st.button("Order"):
+    # Action when the button is clicked
+    if st.button("Book Ticket"):
         
-        # Validation Checks
+        # Exception Handling / Validation
         if not customer_name.strip():
-            st.error("Error: Customer name cannot be empty.")
-        elif quantity <= 0:
-            st.error("Error: Quantity must be greater than 0.")
-            
+            st.error("Error: Customer name cannot be empty. Please enter your name.")
         else:
-            # Price Calculation 
-            unit_price = prices[food_selection]
-            total_price = unit_price * quantity
-            
-            # Display order summary
-            st.success("Order placed successfully!")
-            st.write("--- Order Summary ---")
+            # Display success message and booking summary
+            st.success("Ticket booked successfully!")
+            st.write("--- Booking Summary ---")
             st.write(f"Customer Name: {customer_name}")
-            st.write(f"Food: {food_selection}")
-            st.write(f"Quantity: {quantity}")
-            st.write(f"Total Price: RM {total_price:.2f}")
+            st.write(f"Movie Title: {movie_title}")
+            st.write(f"Show Time: {show_time}")
+            st.write(f"Seat Type: {seat_type}")
 
 except Exception as e:
+    # Catching any unexpected errors
     st.error(f"An unexpected error occurred: {e}")
