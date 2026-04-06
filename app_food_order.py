@@ -36,5 +36,5 @@ try:
             st.write(f"Total Price: RM {total_price:.2f}")
 
 except Exception as e:
-st.error(f"An unexpected error occurred: {e}")
+    st.error(f"An unexpected error occurred: {e}")
 
